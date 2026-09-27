@@ -58,19 +58,14 @@ jobs:
         run: dotnet pack src/AiBenchmark.Net/AiBenchmark.Net.csproj -c Release --no-build -o ./nupkgs ${{ steps.get_version.outputs.version_arg }}
 
       - name: NuGet Login (OIDC Trusted Publishing)
-        if: ${{ !secrets.NUGET_API_KEY }}
         uses: NuGet/login@v1
         id: login
         with:
           user: ${{ secrets.NUGET_USER || 'abhishekkumar00019' }}
 
       - name: Publish Package to NuGet.org
-        env:
-          OIDC_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
-          SECRET_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
-          API_KEY="${OIDC_KEY:-$SECRET_KEY}"
           dotnet nuget push ./nupkgs/*.nupkg \
-            --api-key "$API_KEY" \
+            --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" \
             --source https://api.nuget.org/v3/index.json \
             --skip-duplicate

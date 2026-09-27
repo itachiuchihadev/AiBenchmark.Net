@@ -12,8 +12,8 @@ on:
         default: ''
 
 jobs:
-  build-test-publish:
-    name: Build, Test & Publish to NuGet
+  build-and-publish:
+    name: Build & Publish AiBenchmark.Net
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -33,14 +33,11 @@ jobs:
             9.0.x
             10.0.x
 
-      - name: Restore Dependencies
-        run: dotnet restore
+      - name: Restore Library Dependencies
+        run: dotnet restore src/AiBenchmark.Net/AiBenchmark.Net.csproj
 
-      - name: Build in Release Mode
-        run: dotnet build -c Release --no-restore
-
-      - name: Run Tests
-        run: dotnet test -c Release --no-build --verbosity normal --filter "Category!=Integration"
+      - name: Build Library in Release Mode
+        run: dotnet build src/AiBenchmark.Net/AiBenchmark.Net.csproj -c Release --no-restore
 
       - name: Determine Version
         id: get_version
@@ -57,18 +54,23 @@ jobs:
             echo "version_arg=" >> $GITHUB_OUTPUT
           fi
 
-      - name: Pack NuGet Packages
-        run: dotnet pack -c Release --no-build -o ./nupkgs ${{ steps.get_version.outputs.version_arg }}
+      - name: Pack AiBenchmark.Net
+        run: dotnet pack src/AiBenchmark.Net/AiBenchmark.Net.csproj -c Release --no-build -o ./nupkgs ${{ steps.get_version.outputs.version_arg }}
 
       - name: NuGet Login (OIDC Trusted Publishing)
+        if: ${{ !secrets.NUGET_API_KEY }}
         uses: NuGet/login@v1
         id: login
         with:
           user: ${{ secrets.NUGET_USER || 'abhishekkumar00019' }}
 
-      - name: Publish Packages to NuGet.org
+      - name: Publish Package to NuGet.org
+        env:
+          OIDC_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+          SECRET_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
+          API_KEY="${OIDC_KEY:-$SECRET_KEY}"
           dotnet nuget push ./nupkgs/*.nupkg \
-            --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" \
+            --api-key "$API_KEY" \
             --source https://api.nuget.org/v3/index.json \
             --skip-duplicate

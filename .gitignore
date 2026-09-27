@@ -1,0 +1,46 @@
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][In][32]/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+nupkgs/
+*.nupkg
+*.snupkg
+
+## Visual Studio & IDEs
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+.idea/
+*.swp
+*.*~
+
+## Generated Benchmark Reports & Logs
+AiBenchmarkReports/
+AiMetricsReports/
+BenchmarkDotNet.Artifacts/
+
+## Environment & Secrets
+.env
+.env.*
+!.env.example
+*.local
+
+## OS Files
+.DS_Store
+Thumbs.db
+desktop.ini

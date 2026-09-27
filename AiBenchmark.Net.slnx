@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AiBenchmark.Net/AiBenchmark.Net.csproj" />
+  </Folder>
+  <Project Path="TestPacakge/TestPacakge.csproj" />
+</Solution>

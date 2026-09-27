@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <PackageId>AiBenchmark.Net</PackageId>
+    <Title>AiBenchmark.Net</Title>
+    <Version>1.0.0</Version>
+    <Authors>abhishekkumar00019</Authors>
+    <Company>abhishekkumar00019</Company>
+    <PackageProjectUrl>https://github.com/itachiuchihadev/AiBenchmark.Net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/itachiuchihadev/AiBenchmark.Net</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Description>Declarative BenchmarkDotNet-style LLM benchmarking, SLA assertion guardrails, and autonomous HTML reporting for Microsoft.Extensions.AI.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>ai;benchmark;benchmarking;llm;guardrails;assertions;mcp;evaluation;tokens;sla;dotnet</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.AI" Version="10.10.0" />
+    <PackageReference Include="Microsoft.Extensions.AI.Abstractions" Version="10.10.1" />
+  </ItemGroup>
+
+</Project>
